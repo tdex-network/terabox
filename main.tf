@@ -51,22 +51,28 @@ resource "aws_security_group" "default" {
     ]
 
   }
-  name        = "terraform_example"
+  name        = "terraform_example" #name your security group
   description = "Used in the terraform"
   vpc_id      = aws_vpc.default.id
 
-  # SSH access from anywhere
+  # SSH access from whitelisted IPs
   ingress {
-    from_port   = 3000
-    to_port     = 3000
+    from_port   = 9000
+    to_port     = 9000
     protocol    = "tcp"
-    cidr_blocks = ["172.31.198.0/24","52.49.159.236/32","109.92.31.155/32"]
+    cidr_blocks = ["172.31.198.0/24"] #Add additional IPs separated with coma. 
+  }
+  ingress {
+    from_port   = 9945
+    to_port     = 9945
+    protocol    = "tcp"
+    cidr_blocks = ["172.31.198.0/24"] #Add additional IPs separated with coma. 
   }
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["172.31.198.0/24","52.49.159.236/32", "109.92.31.155/32"]
+    cidr_blocks = ["172.31.198.0/24"] #Add additional IPs separated with coma. 
   }
 
   # outbound internet access
